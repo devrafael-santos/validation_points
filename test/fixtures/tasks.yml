@@ -2,22 +2,22 @@
 
 one:
   epic: one
-  title: MyString
-  jira_key: MyString
-  jira_url: MyString
-  pull_request_url: MyString
-  description: MyText
-  stage: 1
+  title: Feature Task One
+  jira_key: TASK-1
+  jira_url: https://jira.example.com/browse/TASK-1
+  pull_request_url: https://github.com/example/repo/pull/1
+  description: Description of task one
+  stage: 5
   priority: 1
-  story_points: 1
+  story_points: 3
 
 two:
   epic: two
-  title: MyString
-  jira_key: MyString
-  jira_url: MyString
-  pull_request_url: MyString
-  description: MyText
-  stage: 1
-  priority: 1
-  story_points: 1
+  title: Feature Task Two
+  jira_key: TASK-2
+  jira_url: https://jira.example.com/browse/TASK-2
+  pull_request_url: https://github.com/example/repo/pull/2
+  description: Description of task two
+  stage: 0
+  priority: 2
+  story_points: 5
