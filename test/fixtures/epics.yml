@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  jira_key: MyString
-  project_type: 1
-  description: MyText
+  name: Backend Project
+  jira_key: EPIC-1
+  project_type: 0
+  description: Backend epic
 
 two:
-  name: MyString
-  jira_key: MyString
+  name: Frontend Project
+  jira_key: EPIC-2
   project_type: 1
-  description: MyText
+  description: Frontend epic
