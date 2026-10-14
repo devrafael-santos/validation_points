@@ -1,3 +1,210 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg-page: #f9fafb;
+  --bg-surface: #ffffff;
+  --text-main: #111827;
+  --text-muted: #4b5563;
+  --border-color: #e5e7eb;
+  --border-hover: #d1d5db;
+
+  --color-backend: #047857;
+  --color-backend-bg: #ecfdf5;
+  --color-backend-border: #a7f3d0;
+
+  --color-frontend: #0369a1;
+  --color-frontend-bg: #f0f9ff;
+  --color-frontend-border: #bae6fd;
+
+  --color-mobile: #6d28d9;
+  --color-mobile-bg: #f5f3ff;
+  --color-mobile-border: #ddd6fe;
+
+  --color-fullstack: #b45309;
+  --color-fullstack-bg: #fffbeb;
+  --color-fullstack-border: #fde68a;
+
+  --color-urgent: #b91c1c;
+  --color-urgent-bg: #fef2f2;
+  --color-urgent-border: #fecaca;
+
+  --color-high: #c2410c;
+  --color-high-bg: #fff7ed;
+  --color-high-border: #fed7aa;
+
+  --color-medium: #a16207;
+  --color-medium-bg: #fefce8;
+  --color-medium-border: #fef08a;
+
+  --color-low: #4b5563;
+  --color-low-bg: #f3f4f6;
+  --color-low-border: #e5e7eb;
+
+  --color-accent: #4f46e5;
+  --color-accent-hover: #4338ca;
+}
+
+.dark {
+  --bg-page: #030712;
+  --bg-surface: #111827;
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+  --border-color: #1f2937;
+  --border-hover: #374151;
+
+  --color-backend: #34d399;
+  --color-backend-bg: rgba(16, 185, 129, 0.1);
+  --color-backend-border: rgba(16, 185, 129, 0.2);
+
+  --color-frontend: #38bdf8;
+  --color-frontend-bg: rgba(14, 165, 233, 0.1);
+  --color-frontend-border: rgba(14, 165, 233, 0.2);
+
+  --color-mobile: #c084fc;
+  --color-mobile-bg: rgba(168, 85, 247, 0.1);
+  --color-mobile-border: rgba(168, 85, 247, 0.2);
+
+  --color-fullstack: #fbbf24;
+  --color-fullstack-bg: rgba(245, 158, 11, 0.1);
+  --color-fullstack-border: rgba(245, 158, 11, 0.2);
+
+  --color-urgent: #f87171;
+  --color-urgent-bg: rgba(239, 68, 68, 0.1);
+  --color-urgent-border: rgba(239, 68, 68, 0.3);
+
+  --color-high: #fb923c;
+  --color-high-bg: rgba(249, 115, 22, 0.1);
+  --color-high-border: rgba(249, 115, 22, 0.3);
+
+  --color-medium: #fde047;
+  --color-medium-bg: rgba(234, 179, 8, 0.1);
+  --color-medium-border: rgba(234, 179, 8, 0.3);
+
+  --color-low: #9ca3af;
+  --color-low-bg: rgba(156, 163, 175, 0.1);
+  --color-low-border: rgba(156, 163, 175, 0.3);
+
+  --color-accent: #6366f1;
+  --color-accent-hover: #4f46e5;
+}
+
+.task-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  @apply rounded-xl p-5 transition shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4;
+}
+
+.task-card:hover {
+  border-color: var(--border-hover);
+}
+
+.task-title {
+  color: var(--text-main);
+  @apply text-base font-semibold transition;
+}
+
+.task-title:hover {
+  color: var(--color-accent);
+}
+
+.task-description {
+  color: var(--text-muted);
+  @apply text-xs line-clamp-2;
+}
+
+.badge {
+  @apply px-2 py-0.5 rounded text-xs font-medium border;
+  background-color: var(--bg-page);
+  border-color: var(--border-color);
+  color: var(--text-muted);
+}
+
+.badge-backend {
+  color: var(--color-backend);
+  background-color: var(--color-backend-bg);
+  border-color: var(--color-backend-border);
+}
+
+.badge-frontend {
+  color: var(--color-frontend);
+  background-color: var(--color-frontend-bg);
+  border-color: var(--color-frontend-border);
+}
+
+.badge-mobile {
+  color: var(--color-mobile);
+  background-color: var(--color-mobile-bg);
+  border-color: var(--color-mobile-border);
+}
+
+.badge-fullstack {
+  color: var(--color-fullstack);
+  background-color: var(--color-fullstack-bg);
+  border-color: var(--color-fullstack-border);
+}
+
+.badge-urgent {
+  color: var(--color-urgent);
+  background-color: var(--color-urgent-bg);
+  border-color: var(--color-urgent-border);
+  @apply font-semibold;
+}
+
+.badge-high {
+  color: var(--color-high);
+  background-color: var(--color-high-bg);
+  border-color: var(--color-high-border);
+}
+
+.badge-medium {
+  color: var(--color-medium);
+  background-color: var(--color-medium-bg);
+  border-color: var(--color-medium-border);
+}
+
+.badge-low {
+  color: var(--color-low);
+  background-color: var(--color-low-bg);
+  border-color: var(--color-low-border);
+}
+
+.badge-default {
+  @apply bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700;
+}
+
+.filter-btn {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  @apply px-3 py-1.5 rounded-lg text-xs font-medium transition;
+}
+
+.filter-btn:hover {
+  border-color: var(--border-hover);
+}
+
+.filter-btn-active {
+  background-color: var(--color-accent);
+  border: 1px solid transparent;
+  @apply px-3 py-1.5 rounded-lg text-xs font-medium text-white shadow-xs transition;
+}
+
+.btn-action {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition;
+}
+
+.btn-action:hover {
+  border-color: var(--border-hover);
+}
+
+.btn-action-pr {
+  color: var(--color-accent);
+  background-color: var(--color-backend-bg);
+  border: 1px solid var(--color-backend-border);
+  @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition;
+}
