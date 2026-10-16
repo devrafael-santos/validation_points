@@ -1,0 +1,55 @@
+<article id="<%= dom_id(task) %>"
+         draggable="true"
+         data-task-id="<%= task.id %>"
+         data-priority-value="<%= Task.priorities[task.priority] %>"
+         data-action="dragstart->kanban#dragStart dragend->kanban#dragEnd"
+         class="task-card">
+  <div class="space-y-2">
+    <div class="flex flex-wrap items-center gap-1.5">
+      <span class="badge <%= priority_badge_class(task.priority) %>">
+        <%= task.priority.capitalize %>
+      </span>
+
+      <span class="badge <%= project_type_badge_class(task.epic.project_type) %>">
+        <%= task.epic.project_type.upcase %>
+      </span>
+
+      <% if task.story_points.present? %>
+        <span class="text-xs text-gray-500 dark:text-gray-400 font-mono ml-auto">
+          <%= task.story_points %> pts
+        </span>
+      <% end %>
+    </div>
+
+    <div class="text-xs font-medium text-gray-500 dark:text-gray-400">
+      <%= task.epic.name %>
+    </div>
+
+    <h3 class="task-title">
+      <%= task.title %>
+    </h3>
+
+    <% if task.description.present? %>
+      <p class="task-description">
+        <%= task.description %>
+      </p>
+    <% end %>
+  </div>
+
+  <div class="flex items-center justify-between gap-2 pt-3 mt-3 border-t border-gray-200 dark:border-gray-800">
+    <% if task.jira_url.present? %>
+      <%= link_to task.jira_url, target: "_blank", rel: "noopener", class: "btn-action" do %>
+        <span>Jira</span>
+        <span class="font-mono text-gray-500 dark:text-gray-400">(<%= task.jira_key %>)</span>
+        ↗
+      <% end %>
+    <% end %>
+
+    <% if task.pull_request_url.present? %>
+      <%= link_to task.pull_request_url, target: "_blank", rel: "noopener", class: "btn-action-pr" do %>
+        <span>Ver PR</span>
+        ↗
+      <% end %>
+    <% end %>
+  </div>
+</article>
