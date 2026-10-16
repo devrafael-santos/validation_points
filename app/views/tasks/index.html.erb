@@ -1,8 +1,9 @@
-<div class="w-full max-w-6xl mx-auto py-8 px-4">
+<div class="w-full max-w-[1600px] mx-auto py-8 px-6">
   <header class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-gray-200 dark:border-gray-800 gap-4">
     <div>
       <div class="flex items-center gap-3">
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Internal Review Queue</h1>
+        
+<h1 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Validation Points Board</h1>
         <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20">
           <%= @total_count %> tasks
         </span>
@@ -13,13 +14,13 @@
         <% end %>
       </div>
       <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-        Fila de validação técnica interna antes de avançar para Code Review geral.
+        Gerenciamento do fluxo de tarefas e fila de Internal Review.
       </p>
     </div>
 
     <div class="flex items-center gap-4">
       <div data-controller="theme">
-        <button type="button" 
+        <button type="button"
                 data-action="click->theme#toggle"
                 class="btn-action cursor-pointer"
                 title="Alternar entre modo claro e escuro">
@@ -43,71 +44,34 @@
   <div class="flex items-center gap-2 my-6 overflow-x-auto pb-2">
     <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mr-2">Filtrar:</span>
     <%= link_to "Todos", root_path, class: params[:project_type].blank? ? "filter-btn-active" : "filter-btn" %>
-    
-    <% Epic.project_types.each do |key, value| %>
+
+    <% @project_types.each do |key, value| %>
       <%= link_to key.titleize, root_path(project_type: value), class: params[:project_type].to_s == value.to_s ? "filter-btn-active" : "filter-btn" %>
     <% end %>
   </div>
 
-  <% if @tasks.empty? %>
-    <div class="text-center py-16 bg-white dark:bg-gray-900/50 rounded-xl border border-gray-200 dark:border-gray-800 shadow-xs">
-      <p class="text-gray-500 dark:text-gray-400">🎉 Nenhuma tarefa em Internal Review no momento!</p>
-    </div>
-  <% else %>
-    <div class="grid gap-4">
-      <% @tasks.each do |task| %>
-        <article class="task-card">
-          <div class="space-y-2 flex-1">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="badge">
-                <%= task.epic.name %>
-              </span>
+  
+<div data-controller="kanban" class="kanban-board">
+  <% @stages.each do |stage| %>
+    <% stage_tasks = @tasks_by_stage[stage] || [] %>
+    <section class="kanban-column <%= 'kanban-column-highlight' if stage == 'internal_review' %>">
+      <header class="kanban-column-header">
+        <h2 class="kanban-column-title">
+          <%= stage.humanize.upcase %>
+        </h2>
+        <span data-kanban-target="count" data-stage="<%= stage %>" class="badge">
+          <%= stage_tasks.size %>
+        </span>
+        </header>
 
-              <span class="badge <%= project_type_badge_class(task.epic.project_type) %>">
-                <%= task.epic.project_type.upcase %>
-              </span>
-
-              <span class="badge <%= priority_badge_class(task.priority) %>">
-                <%= task.priority.capitalize %>
-              </span>
-
-              <% if task.story_points.present? %>
-                <span class="text-xs text-gray-500 dark:text-gray-400 font-mono">
-                  <%= task.story_points %> pts
-                </span>
-              <% end %>
-            </div>
-
-            <h2 class="task-title">
-              <%= task.title %>
-            </h2>
-
-            <% if task.description.present? %>
-              <p class="task-description">
-                <%= task.description %>
-              </p>
-            <% end %>
-          </div>
-
-          <div class="flex items-center gap-3 pt-3 md:pt-0 border-t md:border-t-0 border-gray-200 dark:border-gray-800">
-            <% if task.jira_url.present? %>
-              <%= link_to task.jira_url, target: "_blank", rel: "noopener", class: "btn-action" do %>
-                <span>Jira</span>
-                <span class="font-mono text-gray-500 dark:text-gray-400">(<%= task.jira_key %>)</span>
-                ↗
-              <% end %>
-            <% end %>
-
-            <% if task.pull_request_url.present? %>
-              <%= link_to task.pull_request_url, target: "_blank", rel: "noopener", class: "btn-action-pr" do %>
-                <span>Ver PR</span>
-                ↗
-              <% end %>
-            <% end %>
-          </div>
-        </article>
-      <% end %>
-    </div>
-  <% end %>
+        
+<div data-kanban-target="column"
+             data-stage="<%= stage %>"
+             data-action="dragover->kanban#dragOver dragleave->kanban#dragLeave drop->kanban#drop"
+  class="kanban-column-body">
+  <%= render stage_tasks %>
+</div>
+      </section>
+    <% end %>
 </div>
 </div>

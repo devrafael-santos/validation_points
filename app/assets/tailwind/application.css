@@ -93,7 +93,7 @@
 .task-card {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
-  @apply rounded-xl p-5 transition shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4;
+  @apply rounded-xl p-4 transition shadow-xs flex flex-col justify-between cursor-grab active:cursor-grabbing;
 }
 
 .task-card:hover {
@@ -207,4 +207,37 @@
   background-color: var(--color-backend-bg);
   border: 1px solid var(--color-backend-border);
   @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition;
+}
+
+.kanban-board {
+  @apply flex gap-4 overflow-x-auto pb-6 items-start;
+}
+
+.kanban-column {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  @apply w-80 shrink-0 rounded-xl flex flex-col;
+}
+
+.kanban-column-highlight {
+  border-color: var(--color-accent);
+}
+
+.kanban-column-header {
+  border-bottom: 1px solid var(--border-color);
+  @apply px-4 py-3 flex items-center justify-between;
+}
+
+.kanban-column-title {
+  color: var(--text-main);
+  @apply text-xs font-bold uppercase tracking-wider;
+}
+
+.kanban-column-body {
+  background-color: var(--bg-page);
+  @apply p-3 flex flex-col gap-3 min-h-[24rem] rounded-b-xl transition-colors;
+}
+
+.kanban-drop-active {
+  background-color: var(--color-backend-bg);
 }
