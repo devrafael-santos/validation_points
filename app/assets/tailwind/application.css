@@ -210,7 +210,7 @@
 }
 
 .kanban-board {
-  @apply flex gap-4 overflow-x-auto pb-6 items-start;
+  @apply flex-1 flex gap-4 overflow-x-auto pb-3 items-stretch;
 }
 
 .kanban-column {
@@ -225,7 +225,7 @@
 
 .kanban-column-header {
   border-bottom: 1px solid var(--border-color);
-  @apply px-4 py-3 flex items-center justify-between;
+  @apply px-4 py-3 flex items-center justify-between shrink-0;
 }
 
 .kanban-column-title {
@@ -235,7 +235,7 @@
 
 .kanban-column-body {
   background-color: var(--bg-page);
-  @apply p-3 flex flex-col gap-3 min-h-[24rem] rounded-b-xl transition-colors;
+  @apply flex-1 p-3 flex flex-col gap-3 rounded-b-xl transition-colors;
 }
 
 .kanban-drop-active {
