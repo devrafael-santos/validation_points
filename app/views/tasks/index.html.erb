@@ -1,7 +1,8 @@
-<div class="w-full max-w-[1600px] mx-auto py-8 px-6">
-  <header class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-gray-200 dark:border-gray-800 gap-4">
+<div class="w-full min-h-screen flex flex-col px-6 pt-6 pb-2">
+  <header class="shrink-0 flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-800 gap-4">
     <div>
-      <div class="flex items-center gap-3">
+      
+<div class="flex items-center gap-3">
         
 <h1 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Validation Points Board</h1>
         <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20">
@@ -41,7 +42,8 @@
     </div>
   </header>
 
-  <div class="flex items-center gap-2 my-6 overflow-x-auto pb-2">
+  
+<div class="shrink-0 flex items-center gap-2 my-4 overflow-x-auto pb-1">
     <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mr-2">Filtrar:</span>
     <%= link_to "Todos", root_path, class: params[:project_type].blank? ? "filter-btn-active" : "filter-btn" %>
 
@@ -64,14 +66,13 @@
         </span>
         </header>
 
-        
-<div data-kanban-target="column"
+        <div data-kanban-target="column"
              data-stage="<%= stage %>"
              data-action="dragover->kanban#dragOver dragleave->kanban#dragLeave drop->kanban#drop"
-  class="kanban-column-body">
-  <%= render stage_tasks %>
+             class="kanban-column-body">
+<%= render stage_tasks %>
 </div>
       </section>
     <% end %>
-</div>
+  </div>
 </div>
