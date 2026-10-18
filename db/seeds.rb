@@ -1,3 +1,15 @@
+User.find_or_create_by!(email: "rafael@teste.com") do |user|
+  user.name = "Rafael"
+  user.password = "password123"
+  user.password_confirmation = "password123"
+end
+
+User.find_or_create_by!(email: "ana@teste.com") do |user|
+  user.name = "Ana Souza"
+  user.password = "password123"
+  user.password_confirmation = "password123"
+end
+
 backend_epic = Epic.find_or_create_by!(jira_key: "SALES-EPIC-1") do |epic|
   epic.name = "Sales Backend"
   epic.project_type = :backend
@@ -22,7 +34,7 @@ tasks_data = [
     jira_key: "SALES-101",
     title: "Implementar validação de cupons expirados na finalização de compra",
     jira_url: "https://jira.exemplo.com/browse/SALES-101",
-    pull_request_url: "https://github.com/avantsoft/sales_backend/pull/42",
+    pull_request_url: "https://github.com/teste/sales_backend/pull/42",
     stage: :internal_review,
     priority: :urgent,
     story_points: 3,
@@ -33,7 +45,7 @@ tasks_data = [
     jira_key: "SALES-102",
     title: "Refatorar endpoint de cálculo de frete para transportadoras terceiras",
     jira_url: "https://jira.exemplo.com/browse/SALES-102",
-    pull_request_url: "https://github.com/avantsoft/sales_backend/pull/45",
+    pull_request_url: "https://github.com/teste/sales_backend/pull/45",
     stage: :internal_review,
     priority: :high,
     story_points: 5,
@@ -44,7 +56,7 @@ tasks_data = [
     jira_key: "SALES-201",
     title: "Ajustar máscara de cartão de crédito e feedback de erro de pagamento",
     jira_url: "https://jira.exemplo.com/browse/SALES-201",
-    pull_request_url: "https://github.com/avantsoft/sales_frontend/pull/88",
+    pull_request_url: "https://github.com/teste/sales_frontend/pull/88",
     stage: :internal_review,
     priority: :medium,
     story_points: 2,
@@ -55,7 +67,7 @@ tasks_data = [
     jira_key: "SALES-301",
     title: "Corrigir crash ao tentar compartilhar comprovante em PDF no iOS",
     jira_url: "https://jira.exemplo.com/browse/SALES-301",
-    pull_request_url: "https://github.com/avantsoft/sales_mobile/pull/19",
+    pull_request_url: "https://github.com/teste/sales_mobile/pull/19",
     stage: :internal_review,
     priority: :urgent,
     story_points: 1,
@@ -75,7 +87,7 @@ tasks_data = [
 ]
 
 tasks_data.each do |data|
-  Task.find_or_create_by!(jira_key: data[:jira_key]) do |task|
-    task.assign_attributes(data)
-  end
+  task = Task.find_or_initialize_by(jira_key: data[:jira_key])
+  task.assign_attributes(data)
+  task.save!
 end
