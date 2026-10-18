@@ -1,0 +1,35 @@
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="mb-6 text-center">
+      <h2 class="text-2xl font-bold tracking-tight">Validation Points</h2>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Entre com sua conta para acessar o quadro</p>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-4" }) do |f| %>
+      <div>
+        <%= f.label :email, "E-mail", class: "form-label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "seu@email.com", class: "form-input" %>
+      </div>
+
+      <div>
+        <%= f.label :password, "Senha", class: "form-label" %>
+        <%= f.password_field :password, autocomplete: "current-password", placeholder: "••••••••", class: "form-input" %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="flex items-center gap-2">
+          <%= f.check_box :remember_me, class: "rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" %>
+          <%= f.label :remember_me, "Lembrar de mim", class: "text-xs text-gray-600 dark:text-gray-400 cursor-pointer" %>
+        </div>
+      <% end %>
+
+      <div class="pt-2">
+        <%= f.submit "Entrar", class: "btn-primary" %>
+      </div>
+    <% end %>
+
+    <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-800 text-center space-y-2 text-xs">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>
