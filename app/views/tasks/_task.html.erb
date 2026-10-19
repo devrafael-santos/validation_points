@@ -3,7 +3,7 @@
          data-task-id="<%= task.id %>"
          data-priority-value="<%= Task.priorities[task.priority] %>"
          data-action="dragstart->kanban#dragStart dragend->kanban#dragEnd"
-         class="task-card">
+  class="task-card">
   <div class="space-y-2">
     <div class="flex flex-wrap items-center gap-1.5">
       <span class="badge <%= priority_badge_class(task.priority) %>">
