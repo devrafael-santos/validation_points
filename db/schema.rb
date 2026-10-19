@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_152700) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_19_214256) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -36,9 +36,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_152700) do
     t.integer "story_points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "reviewer_id"
     t.index ["epic_id"], name: "index_tasks_on_epic_id"
     t.index ["jira_key"], name: "index_tasks_on_jira_key", unique: true
     t.index ["priority"], name: "index_tasks_on_priority"
+    t.index ["reviewer_id"], name: "index_tasks_on_reviewer_id"
     t.index ["stage"], name: "index_tasks_on_stage"
   end
 
@@ -56,4 +58,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_152700) do
   end
 
   add_foreign_key "tasks", "epics"
+  add_foreign_key "tasks", "users", column: "reviewer_id"
 end

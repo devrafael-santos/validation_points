@@ -1,5 +1,6 @@
 class Task < ApplicationRecord
   belongs_to :epic
+  belongs_to :reviewer, class_name: "User", optional: true
 
   enum :stage, {
     to_do: 0,
