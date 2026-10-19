@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.includes(:epic).order(priority: :desc)
+    @tasks = Task.includes(:epic, :reviewer).order(priority: :desc)
 
     if params[:project_type].present?
       @tasks = @tasks.joins(:epic).where(epics: { project_type: params[:project_type] })
@@ -24,6 +24,18 @@ class TasksController < ApplicationController
     else
       head :unprocessable_entity
     end
+  end
+
+  def toggle_reviewer
+    @task = Task.find(params[:id])
+
+    if @task.reviewer == current_user
+      @task.update(reviewer: nil)
+    else
+      @task.update(reviewer: current_user)
+    end
+
+    redirect_to root_path
   end
 
   private

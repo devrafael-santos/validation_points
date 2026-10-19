@@ -1,4 +1,7 @@
 class Task < ApplicationRecord
+  before_save :clear_reviewer, if: :will_save_change_to_stage?
+  after_update_commit -> { broadcast_refresh_to "tasks" }
+
   belongs_to :epic
   belongs_to :reviewer, class_name: "User", optional: true
 
@@ -25,4 +28,10 @@ class Task < ApplicationRecord
 
   validates :title, :jira_key, presence: true
   validates :jira_key, uniqueness: true
+
+  private
+
+  def clear_reviewer
+    self.reviewer = nil
+  end
 end
