@@ -11,15 +11,38 @@ export default class extends Controller {
     this.draggedCard.classList.add("opacity-50");
     event.dataTransfer.effectAllowed = "move";
     event.dataTransfer.setData("text/plain", this.draggedCard.dataset.taskId);
+
+    this.scrollSpeed = 0;
+    clearInterval(this.scrollInterval);
+    this.scrollInterval = setInterval(() => {
+      if (this.scrollSpeed !== 0) {
+        this.element.scrollLeft += this.scrollSpeed;
+      }
+    }, 16);
   }
 
   dragEnd() {
+    this.scrollSpeed = 0;
+    clearInterval(this.scrollInterval);
+
     if (this.draggedCard) {
       this.draggedCard.classList.remove("opacity-50");
     }
     this.columnTargets.forEach((col) =>
       col.classList.remove("kanban-drop-active"),
     );
+  }
+
+  autoScroll(event) {
+    const edgeSize = window.innerWidth < 600 ? 150 : 300;
+
+    if (window.innerWidth - event.clientX < edgeSize) {
+      this.scrollSpeed = 8;
+    } else if (event.clientX < edgeSize) {
+      this.scrollSpeed = -8;
+    } else {
+      this.scrollSpeed = 0;
+    }
   }
 
   dragOver(event) {

@@ -58,7 +58,7 @@
       <%= link_to key.titleize, root_path(project_type: value), class: params[:project_type].to_s == value.to_s ? "filter-btn-active" : "filter-btn" %>
     <% end %>
   </div>
-  <div data-controller="kanban" class="kanban-board">
+  <div data-controller="kanban" class="kanban-board" data-action="dragover->kanban#autoScroll">
     <% @stages.each do |stage| %>
       <% stage_tasks = @tasks_by_stage[stage] || [] %>
       <section class="kanban-column <%= 'kanban-column-highlight' if stage == 'internal_review' %>">
