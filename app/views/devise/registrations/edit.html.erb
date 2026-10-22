@@ -3,7 +3,16 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-  
+  <%= f.label :avatar, class: "cursor-pointer group relative flex items-center justify-center w-24 h-24 rounded-full border-2 border-dashed border-gray-300 dark:border-gray-700 hover:border-indigo-500 overflow-hidden" do %>
+
+    <img data-avatar-preview-target="output" class="hidden w-full h-full object-cover">
+
+    <div data-avatar-preview-target="placeholder" class="text-center text-gray-400">
+      <span class="text-xs font-medium">Foto</span>
+    </div>
+
+  <% end %>
+
   <div class="field">
     <p><%= f.label :name %></p>
     <p><%= f.text_field :name, autofocus: true %></p>
