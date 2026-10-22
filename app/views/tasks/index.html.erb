@@ -25,6 +25,13 @@
 
         <div class="flex items-center gap-3 pl-3 border-l border-gray-200 dark:border-gray-800">
           <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            <% if current_user.avatar.attached? %>
+              <%= image_tag current_user.avatar, class: "w-8 h-8 rounded-full object-cover" %>
+            <% else %>
+              <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">
+                <%= current_user.name.first.upcase %>
+              </div>
+            <% end %>
             Olá, <strong><%= current_user.name %></strong>
           </span>
           <%= button_to "Sair", destroy_user_session_path, method: :delete, class: "btn-action cursor-pointer text-red-600 dark:text-red-400" %>
