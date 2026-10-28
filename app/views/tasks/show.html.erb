@@ -1,10 +1,10 @@
 <%= turbo_frame_tag "drawer" do %>
-  <div class="drawer-backdrop">
+  <div class="fixed inset-0 bg-black/50 z-50 flex justify-end">
     <%= link_to "", root_path, data: { turbo_frame: "drawer" }, class: "fixed inset-0 cursor-default" %>
 
-    <div class="drawer-panel">
+    <div class="relative w-full max-w-lg bg-surface border-l border-color h-full shadow-2xl p-6 overflow-y-auto z-10 flex flex-col justify-between">
       <div>
-        <div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-800 mb-6">
+        <div class="flex items-center justify-between pb-4 border-b border-color mb-6">
           <div class="flex items-center gap-2">
             <span class="badge <%= priority_badge_class(@task.priority) %>">
               <%= @task.priority.capitalize %>
@@ -17,25 +17,25 @@
           <%= link_to "✕", root_path, data: { turbo_frame: "drawer" }, class: "btn-action cursor-pointer text-gray-500 hover:text-gray-900 dark:hover:text-white" %>
         </div>
 
-        <h2 class="drawer-title">
+        <h2 class="text-xl font-bold text-main mb-2">
           <%= @task.title %>
         </h2>
 
-        <p class="drawer-subtitle">
+        <p class="text-xs text-muted mb-6">
           Épico: <strong><%= @task.epic.name %></strong> • Jira: <strong><%= @task.jira_key %></strong>
         </p>
 
         <div class="space-y-4">
           <div>
-            <h4 class="drawer-section-title">Descrição</h4>
-            <p class="drawer-description">
+            <h4 class="text-xs font-semibold uppercase tracking-wider text-muted mb-1">Descrição</h4>
+            <p class="text-sm text-main whitespace-pre-line bg-page p-3 rounded-lg border border-color">
               <%= @task.description.presence || "Sem descrição informada." %>
             </p>
           </div>
         </div>
       </div>
 
-      <div class="pt-6 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
+      <div class="pt-6 border-t border-color flex items-center justify-between">
         <% if @task.jira_url.present? %>
           <%= link_to "Abrir no Jira ↗", @task.jira_url, target: "_blank", rel: "noopener", class: "btn-action" %>
         <% end %>
