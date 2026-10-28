@@ -37,15 +37,10 @@
 
       <div class="pt-6 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
         <% if @task.jira_url.present? %>
-          <a href="<%= @task.jira_url %>" target="_blank" rel="noopener" class="btn-action">
-            Abrir no Jira ↗
-          </a>
+          <%= link_to "Abrir no Jira ↗", @task.jira_url, target: "_blank", rel: "noopener", class: "btn-action" %>
         <% end %>
-
         <% if @task.pull_request_url.present? %>
-          <a href="<%= @task.pull_request_url %>" target="_blank" rel="noopener" class="btn-action-pr">
-            Ver Pull Request ↗
-          </a>
+          <%= link_to "Ver Pull Request ↗", @task.pull_request_url, target: "_blank", rel: "noopener", class: "btn-action-pr" %>
         <% end %>
       </div>
     </div>
