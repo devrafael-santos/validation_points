@@ -16,6 +16,23 @@ RSpec.describe "Tasks", type: :request do
     end
   end
 
+  describe "GET /show" do
+    it "redirect to sign in page when user is not authenticated" do
+      task = tasks(:one)
+      get task_path(task)
+
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "returns success when user is authenticated" do
+      sign_in users(:one)
+      task = tasks(:one)
+      get task_path(task)
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   describe "PATCH /tasks/:id" do
     it "updates task stage" do
       sign_in users(:one)

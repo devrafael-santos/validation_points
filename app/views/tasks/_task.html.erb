@@ -32,7 +32,7 @@
     </div>
 
     <h3 class="task-title">
-      <%= task.title %>
+      <%= link_to task.title, task_path(task), data: { turbo_frame: "drawer" } %>
     </h3>
 
     <% if task.description.present? %>

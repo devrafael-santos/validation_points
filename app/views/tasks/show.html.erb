@@ -1,0 +1,48 @@
+<%= turbo_frame_tag "drawer" do %>
+  <div class="drawer-backdrop">
+    <%= link_to "", root_path, data: { turbo_frame: "drawer" }, class: "fixed inset-0 cursor-default" %>
+
+    <div class="drawer-panel">
+      <div>
+        <div class="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-800 mb-6">
+          <div class="flex items-center gap-2">
+            <span class="badge <%= priority_badge_class(@task.priority) %>">
+              <%= @task.priority.capitalize %>
+            </span>
+            <span class="badge <%= project_type_badge_class(@task.epic.project_type) %>">
+              <%= @task.epic.project_type.upcase %>
+            </span>
+          </div>
+
+          <%= link_to "✕", root_path, data: { turbo_frame: "drawer" }, class: "btn-action cursor-pointer text-gray-500 hover:text-gray-900 dark:hover:text-white" %>
+        </div>
+
+        <h2 class="drawer-title">
+          <%= @task.title %>
+        </h2>
+
+        <p class="drawer-subtitle">
+          Épico: <strong><%= @task.epic.name %></strong> • Jira: <strong><%= @task.jira_key %></strong>
+        </p>
+
+        <div class="space-y-4">
+          <div>
+            <h4 class="drawer-section-title">Descrição</h4>
+            <p class="drawer-description">
+              <%= @task.description.presence || "Sem descrição informada." %>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
+        <% if @task.jira_url.present? %>
+          <%= link_to "Abrir no Jira ↗", @task.jira_url, target: "_blank", rel: "noopener", class: "btn-action" %>
+        <% end %>
+        <% if @task.pull_request_url.present? %>
+          <%= link_to "Ver Pull Request ↗", @task.pull_request_url, target: "_blank", rel: "noopener", class: "btn-action-pr" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
