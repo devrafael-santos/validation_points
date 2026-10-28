@@ -27,7 +27,7 @@ class Task < ApplicationRecord
   }, prefix: true
 
   validates :title, :jira_key, presence: true
-  validates :jira_key, uniqueness: true
+  validates :jira_url, :pull_request_url, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]), allow_blank: true }
 
   private
 

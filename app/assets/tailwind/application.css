@@ -292,3 +292,36 @@
 .btn-primary:hover {
   background-color: var(--color-accent-hover);
 }
+
+.drawer-backdrop {
+  @apply fixed inset-0 bg-black/50 z-50 flex justify-end;
+}
+
+.drawer-panel {
+  background-color: var(--bg-surface);
+  border-left: 1px solid var(--border-color);
+  color: var(--text-main);
+  @apply relative w-full max-w-lg h-full shadow-2xl p-6 overflow-y-auto z-10 flex flex-col justify-between;
+}
+
+.drawer-title {
+  color: var(--text-main);
+  @apply text-xl font-bold mb-2;
+}
+
+.drawer-subtitle {
+  color: var(--text-muted);
+  @apply text-xs mb-6;
+}
+
+.drawer-section-title {
+  color: var(--text-muted);
+  @apply text-xs font-semibold uppercase tracking-wider mb-1;
+}
+
+.drawer-description {
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  @apply text-sm whitespace-pre-line p-3 rounded-lg;
+}
