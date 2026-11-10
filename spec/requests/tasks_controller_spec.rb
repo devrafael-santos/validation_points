@@ -34,13 +34,22 @@ RSpec.describe "Tasks", type: :request do
   end
 
   describe "PATCH /tasks/:id" do
-    it "updates task stage" do
+    it "updates task stage via json" do
       sign_in users(:one)
       task = tasks(:one)
 
-      patch task_path(task), params: { task: { stage: "code_review" } }
+      patch task_path(task), params: { task: { stage: "code_review" } }, as: json
       expect(response).to have_http_status(:ok)
       expect(task.reload.stage).to eq("code_review")
+    end
+
+    it "updates task via html form and redirects" do
+      sign_in users(:one)
+      task = tasks(:one)
+
+      patch task_path(task), params: { task: { title: "Novo Título" } }
+      expect(response).to redirect_to(root_path)
+      expect(task.reload.title).to eq("Novo Título")
     end
   end
 
