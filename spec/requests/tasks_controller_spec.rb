@@ -38,7 +38,7 @@ RSpec.describe "Tasks", type: :request do
       sign_in users(:one)
       task = tasks(:one)
 
-      patch task_path(task), params: { task: { stage: "code_review" } }, as: json
+      patch task_path(task), params: { task: { stage: "code_review" } }, as: :json
       expect(response).to have_http_status(:ok)
       expect(task.reload.stage).to eq("code_review")
     end
