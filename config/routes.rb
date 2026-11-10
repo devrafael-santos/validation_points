@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   root "tasks#index"
 
-  resources :tasks, only: %i[index show update] do
+  resources :tasks do
     member do
       patch :toggle_reviewer
     end

@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
   before_save :clear_reviewer, if: :will_save_change_to_stage?
-  after_update_commit -> { broadcast_refresh_to "tasks" }
+  after_commit -> { broadcast_refresh_to "tasks" }
 
   belongs_to :epic
   belongs_to :reviewer, class_name: "User", optional: true
@@ -27,6 +27,7 @@ class Task < ApplicationRecord
   }, prefix: true
 
   validates :title, :jira_key, presence: true
+  validates :description, length: { maximum: 300 }, allow_blank: true
   validates :jira_url, :pull_request_url, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]), allow_blank: true }
 
   private

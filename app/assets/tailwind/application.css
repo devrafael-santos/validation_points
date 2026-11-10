@@ -209,6 +209,22 @@
   @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition;
 }
 
+.btn-action-danger {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: #dc2626;
+  @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition cursor-pointer;
+}
+
+.dark .btn-action-danger {
+  color: #f87171;
+}
+
+.btn-action-danger:hover {
+  border-color: #f87171;
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
 .kanban-board {
   @apply flex-1 flex gap-4 overflow-x-auto pb-3 items-stretch;
 }
@@ -306,9 +322,8 @@
 
 .drawer-title {
   color: var(--text-main);
-  @apply text-xl font-bold mb-2;
+  @apply text-xl font-bold mb-2 break-words;
 }
-
 .drawer-subtitle {
   color: var(--text-muted);
   @apply text-xs mb-6;
@@ -323,5 +338,5 @@
   background-color: var(--bg-page);
   border: 1px solid var(--border-color);
   color: var(--text-main);
-  @apply text-sm whitespace-pre-line p-3 rounded-lg;
+  @apply text-sm whitespace-pre-line p-3 rounded-lg break-words;
 }
