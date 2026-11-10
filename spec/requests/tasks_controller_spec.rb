@@ -73,4 +73,27 @@ RSpec.describe "Tasks", type: :request do
       expect(task.reload.reviewer).to be_nil
     end
   end
+
+  describe "DELETE /tasks/:id" do
+    it "deletes task when user is admin" do
+      sign_in users(:one)
+      task = tasks(:one)
+
+      delete task_path(task)
+
+     expect(response).to have_http_status(:see_other)
+     expect(Task.exists?(task.id)).to be_falsey
+    end
+
+    it "does not delete task when user is not admin" do
+      sign_in users(:two)
+      task = tasks(:one)
+
+      delete task_path(task)
+
+      expect(response).to redirect_to(root_path)
+      expect(flash[:alert]).to eq("Você não tem permissão para executar esta ação.")
+      expect(Task.exists?(task.id)).to be_truthy
+    end
+  end
 end

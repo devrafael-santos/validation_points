@@ -15,8 +15,12 @@
           </div>
 
           <div class="flex items-center gap-2">
-            <%= link_to "Editar", edit_task_path(@task), data: { turbo_frame: "drawer" }, class: "btn-action cursor-pointer" %>
-            <%= button_to "Excluir", task_path(@task), method: :delete, data: { turbo_confirm: "Tem certeza que deseja excluir esta tarefa?", turbo_frame: "_top" }, class: "btn-action-danger" %>
+            <% if policy(@task).edit? %>
+              <%= link_to "Editar", edit_task_path(@task), data: { turbo_frame: "drawer" }, class: "btn-action cursor-pointer" %>
+            <% end %>
+            <% if policy(@task).destroy? %>
+              <%= button_to "Excluir", task_path(@task), method: :delete, data: { turbo_confirm: "Tem certeza que deseja excluir esta tarefa?", turbo_frame: "_top" }, class: "btn-action-danger" %>
+            <% end %>
             <%= link_to "✕", root_path, data: { turbo_frame: "drawer" }, class: "btn-action cursor-pointer text-gray-500 hover:text-gray-900 dark:hover:text-white" %>
           </div>
         </div>

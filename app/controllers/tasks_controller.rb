@@ -34,6 +34,8 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
+    authorize @task
+
     if @task.update(task_params)
       respond_to do |format|
         format.html { redirect_to root_path, notice: "Task was successfully updated." }
@@ -47,17 +49,21 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
+    authorize @task
     @epics = Epic.all
   end
 
   def destroy
     @task = Task.find(params[:id])
+    authorize @task
+
     @task.destroy
     redirect_to root_path, status: :see_other, notice: "Task was successfully deleted."
   end
 
   def toggle_reviewer
     @task = Task.find(params[:id])
+    authorize @task
 
     if @task.reviewer == current_user
       @task.update(reviewer: nil)
