@@ -1,0 +1,69 @@
+<%= form_with(model: task, data: { turbo_frame: "_top" }, class: "flex flex-col h-full") do |f| %>
+  <div class="flex items-center justify-between pb-4 border-b border-color mb-6">
+    <h2 class="drawer-title">
+      <%= task.new_record? ? "Nova Tarefa" : "Editar Tarefa" %>
+    </h2>
+    <%= link_to "✕", root_path, data: { turbo_frame: "drawer" }, class: "btn-action cursor-pointer text-gray-500 hover:text-gray-900 dark:hover:text-white" %>
+  </div>
+
+  <% if task.errors.any? %>
+    <div class="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-sm">
+      <ul class="list-disc pl-5 space-y-1">
+        <% task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="space-y-4 flex-1 overflow-y-auto pr-1">
+    <div>
+      <%= f.label :title, "Título", class: "form-label" %>
+      <%= f.text_field :title, required: true, class: "form-input", placeholder: "Ex: Ajustar carregamento do avatar" %>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <%= f.label :jira_key, "Chave do Jira", class: "form-label" %>
+        <%= f.text_field :jira_key, required: true, class: "form-input", placeholder: "Ex: TASK-102" %>
+      </div>
+
+      <div>
+        <%= f.label :epic_id, "Épico", class: "form-label" %>
+        <%= f.collection_select :epic_id, epics, :id, :name, { prompt: "Selecione um épico" }, { required: true, class: "form-input" } %>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <%= f.label :priority, "Prioridade", class: "form-label" %>
+        <%= f.select :priority, Task.priorities.keys.map { |p| [p.capitalize, p] }, {}, { class: "form-input" } %>
+      </div>
+
+      <div>
+        <%= f.label :stage, "Etapa", class: "form-label" %>
+        <%= f.select :stage, Task.stages.keys.map { |s| [s.humanize, s] }, {}, { class: "form-input" } %>
+      </div>
+    </div>
+
+    <div>
+      <%= f.label :jira_url, "Link do Jira", class: "form-label" %>
+      <%= f.url_field :jira_url, class: "form-input", placeholder: "https://jira.exemplo.com/browse/..." %>
+    </div>
+
+    <div>
+      <%= f.label :pull_request_url, "Link do Pull Request", class: "form-label" %>
+      <%= f.url_field :pull_request_url, class: "form-input", placeholder: "https://github.com/..." %>
+    </div>
+
+    <div>
+      <%= f.label :description, "Descrição", class: "form-label" %>
+      <%= f.text_area :description, rows: 4, class: "form-input resize-none", maxlength: 300, placeholder: "Detalhes ou requisitos da tarefa..." %>
+    </div>
+  </div>
+
+  <div class="pt-6 border-t border-color flex items-center justify-end gap-3 mt-4">
+    <%= link_to "Cancelar", root_path, data: { turbo_frame: "drawer" }, class: "btn-action cursor-pointer" %>
+    <%= f.submit task.new_record? ? "Criar Tarefa" : "Salvar Alterações", class: "btn-primary cursor-pointer text-sm" %>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "drawer" do %>
+  <div class="drawer-backdrop">
+    <%= link_to "", root_path, data: { turbo_frame: "drawer" }, class: "fixed inset-0 cursor-default" %>
+
+    <div class="drawer-panel">
+      <%= render "form", task: @task, epics: @epics %>
+    </div>
+  </div>
+<% end %>
