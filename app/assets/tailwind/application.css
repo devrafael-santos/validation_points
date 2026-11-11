@@ -302,7 +302,7 @@
 
 .btn-primary {
   background-color: var(--color-accent);
-  @apply w-full py-2.5 px-4 rounded-lg text-sm font-semibold text-white transition cursor-pointer;
+  @apply w-full py-2.5 px-4 rounded-lg text-sm font-semibold text-white transition cursor-pointer text-center inline-flex items-center justify-center;
 }
 
 .btn-primary:hover {
