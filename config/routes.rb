@@ -9,4 +9,9 @@ Rails.application.routes.draw do
       patch :toggle_reviewer
     end
   end
+
+  namespace :admin do
+    root to: "dashboard#index"
+    resources :users, only: %i[ index update destroy ]
+  end
 end

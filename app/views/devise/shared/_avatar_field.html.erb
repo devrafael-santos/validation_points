@@ -1,0 +1,16 @@
+<div data-controller="avatar-preview" class="flex flex-col items-center">
+  <%= form.label :avatar, class: "cursor-pointer group relative flex items-center justify-center w-24 h-24 rounded-full border-2 border-dashed border-gray-300 dark:border-gray-700 hover:border-indigo-500 overflow-hidden" do %>
+    <% if user&.avatar&.attached? %>
+      <%= image_tag user.avatar, data: { avatar_preview_target: "output" }, class: "w-full h-full object-cover" %>
+      <div data-avatar-preview-target="placeholder" class="hidden text-center text-gray-400">
+        <span class="text-xs font-medium">Trocar</span>
+      </div>
+    <% else %>
+      <img data-avatar-preview-target="output" class="hidden w-full h-full object-cover">
+      <div data-avatar-preview-target="placeholder" class="text-center text-gray-400">
+        <span class="text-xs font-medium">Foto</span>
+      </div>
+    <% end %>
+  <% end %>
+  <%= form.file_field :avatar, accept: "image/*", class: "hidden", data: { action: "change->avatar-preview#preview" } %>
+</div>
