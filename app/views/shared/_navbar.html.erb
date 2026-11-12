@@ -14,7 +14,11 @@
         <%= link_to "Kanban", root_path, class: "px-3 py-1.5 rounded-lg text-xs font-semibold #{current_page?(root_path) ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors'}" %>
 
         <% if policy(:dashboard).show? %>
-          <%= link_to "Painel Admin", admin_root_path, class: "px-3 py-1.5 rounded-lg text-xs font-semibold #{request.path.start_with?('/admin') ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors'}" %>
+          <%= link_to "Painel Admin", admin_root_path, class: "px-3 py-1.5 rounded-lg text-xs font-semibold #{current_page?(admin_root_path) ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors'}" %>
+        <% end %>
+
+        <% if policy(:user).index? %>
+          <%= link_to "Usuários", admin_users_path, class: "px-3 py-1.5 rounded-lg text-xs font-semibold #{request.path.start_with?(admin_users_path) ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors'}" %>
         <% end %>
       </nav>
     </div>

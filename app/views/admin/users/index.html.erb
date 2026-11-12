@@ -1,0 +1,79 @@
+<div class="w-full min-h-screen flex flex-col px-6 pt-6 pb-8 max-w-7xl mx-auto">
+  <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-color mb-8 gap-4">
+    <div>
+      <div class="flex items-center gap-3 flex-wrap">
+        <h1 class="text-xl md:text-2xl font-bold text-main tracking-tight">Gerenciamento de Usuários</h1>
+        <span class="badge badge-accent"><%= @users.count %> usuários</span>
+      </div>
+      <p class="text-xs md:text-sm text-muted mt-1">
+        Controle de acesso, funções e membros da equipe.
+      </p>
+    </div>
+
+    <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+      <%= link_to "← Voltar ao Painel", admin_root_path, class: "btn-action cursor-pointer text-xs sm:text-sm py-2 px-3" %>
+      <%= link_to "Quadro Kanban", root_path, class: "btn-action cursor-pointer text-xs sm:text-sm py-2 px-3" %>
+    </div>
+  </div>
+
+  <div class="bg-surface border border-color rounded-2xl shadow-xs overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b border-color bg-page/50 text-[11px] font-bold uppercase tracking-wider text-muted">
+            <th class="py-3.5 px-6">Usuário</th>
+            <th class="py-3.5 px-6">Função (Role)</th>
+            <th class="py-3.5 px-6">Tarefas em Análise</th>
+            <th class="py-3.5 px-6 text-right">Ações</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-color text-sm">
+          <% @users.each do |user| %>
+            <tr class="hover:bg-page/40 transition-colors">
+              <td class="py-4 px-6">
+                <div class="flex items-center gap-3">
+                  <%= user_avatar(user, size_class: "w-10 h-10 text-sm") %>
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-2">
+                      <span class="font-bold text-main truncate"><%= user.name %></span>
+                      <% if user == current_user %>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">Você</span>
+                      <% end %>
+                    </div>
+                    <span class="text-xs text-muted block truncate"><%= user.email %></span>
+                  </div>
+                </div>
+              </td>
+
+              <td class="py-4 px-6">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold <%= user.admin? ? 'bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700' %>">
+                  <%= user.role.capitalize %>
+                </span>
+              </td>
+
+              <td class="py-4 px-6 text-muted text-xs">
+                <%= user.reviewing_tasks.count %> tarefas ativas
+              </td>
+
+              <td class="py-4 px-6 text-right">
+                <div class="inline-flex items-center justify-end gap-2">
+                  <% if user == current_user %>
+                    <span class="text-xs text-muted italic mr-2">Sua conta</span>
+                  <% else %>
+                    <% if user.member? %>
+                      <%= button_to "Tornar Admin", admin_user_path(user, user: { role: :admin }), method: :patch, class: "btn-action cursor-pointer text-xs py-1.5 px-3 hover:text-indigo-600 dark:hover:text-indigo-400" %>
+                    <% else %>
+                      <%= button_to "Tornar Membro", admin_user_path(user, user: { role: :member }), method: :patch, data: { turbo_confirm: "Tem certeza que deseja remover o acesso administrativo de #{user.name}?" }, class: "btn-action cursor-pointer text-xs py-1.5 px-3" %>
+                    <% end %>
+
+                    <%= button_to "Excluir", admin_user_path(user), method: :delete, data: { turbo_confirm: "Tem certeza que deseja excluir o usuário #{user.name} definitivamente?" }, class: "btn-action-danger cursor-pointer text-xs py-1.5 px-3" %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
