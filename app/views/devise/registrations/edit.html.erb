@@ -1,51 +1,108 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="w-full min-h-screen flex flex-col items-center justify-start px-6 pt-6 pb-12 max-w-2xl mx-auto">
+  <div class="w-full flex items-center justify-between pb-6 border-b border-color mb-8">
+    <div>
+      <h1 class="text-xl md:text-2xl font-bold text-main tracking-tight">Editar Meus Dados</h1>
+      <p class="text-xs md:text-sm text-muted mt-1">Atualize suas informações pessoais e credenciais de acesso.</p>
+    </div>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="mb-6 flex justify-center">
-    <%= render "devise/shared/avatar_field", form: f, user: resource %>
+    <%= link_to "← Voltar ao Perfil", user_path(current_user), class: "btn-action cursor-pointer text-xs sm:text-sm py-2 px-3" %>
   </div>
 
-  <div class="field">
-    <p><%= f.label :name %></p>
-    <p><%= f.text_field :name, autofocus: true %></p>
-  </div>
+  <div class="w-full bg-surface border border-color rounded-2xl p-6 sm:p-8 shadow-xs">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "space-y-6" }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autocomplete: "email" %></p>
-  </div>
+      <div class="flex flex-col items-center justify-center pb-6 border-b border-color">
+        <span class="text-xs font-semibold uppercase tracking-wider text-muted mb-3">Foto de Perfil</span>
+        <%= render "devise/shared/avatar_field", form: f, user: resource %>
+        <span class="text-[11px] text-muted mt-2">Clique no círculo para trocar de foto</span>
+      </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+      <div class="space-y-4">
+        <div>
+          <%= f.label :name, "Nome Completo", class: "form-label" %>
+          <%= f.text_field :name, autofocus: true, placeholder: "Seu Nome", class: "form-input" %>
+        </div>
 
-  <div class="field">
-    <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i></p>
-    <p><%= f.password_field :password, autocomplete: "new-password" %></p>
-    <% if @minimum_password_length %>
-      <p><em><%= @minimum_password_length %> characters minimum</em></p>
+        <div>
+          <%= f.label :email, "Endereço de E-mail", class: "form-label" %>
+          <%= f.email_field :email, autocomplete: "email", placeholder: "seu@email.com", class: "form-input" %>
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-color space-y-4">
+        <div>
+          <h3 class="text-sm font-bold text-main">Alterar Senha</h3>
+          <p class="text-xs text-muted">Deixe os campos abaixo em branco se não desejar alterar sua senha atual.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <%= f.label :password, "Nova Senha", class: "form-label" %>
+            <div data-controller="password-toggle" class="relative">
+              <%= f.password_field :password, autocomplete: "new-password", placeholder: "••••••••", class: "form-input pr-10", data: { password_toggle_target: "input" } %>
+              <button type="button" data-action="click->password-toggle#toggle" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer" aria-label="Mostrar ou ocultar senha">
+                <svg data-password-toggle-target="iconShow" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <svg data-password-toggle-target="iconHide" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                </svg>
+              </button>
+            </div>
+            <% if @minimum_password_length %>
+              <span class="text-[11px] text-muted mt-1 block">Mínimo de <%= @minimum_password_length %> caracteres</span>
+            <% end %>
+          </div>
+
+          <div>
+            <%= f.label :password_confirmation, "Confirmar Nova Senha", class: "form-label" %>
+            <div data-controller="password-toggle" class="relative">
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "••••••••", class: "form-input pr-10", data: { password_toggle_target: "input" } %>
+              <button type="button" data-action="click->password-toggle#toggle" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer" aria-label="Mostrar ou ocultar senha">
+                <svg data-password-toggle-target="iconShow" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <svg data-password-toggle-target="iconHide" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-6 border-t border-color">
+        <%= f.label :current_password, "Senha Atual (obrigatória para salvar alterações)", class: "form-label" %>
+        <div data-controller="password-toggle" class="relative">
+          <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "Digite sua senha atual", class: "form-input pr-10", data: { password_toggle_target: "input" } %>
+          <button type="button" data-action="click->password-toggle#toggle" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer" aria-label="Mostrar ou ocultar senha">
+            <svg data-password-toggle-target="iconShow" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            <svg data-password-toggle-target="iconHide" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="pt-4 flex items-center justify-end gap-3">
+        <%= link_to "Cancelar", user_path(current_user), class: "btn-action cursor-pointer" %>
+        <%= f.submit "Salvar Alterações", class: "btn-primary cursor-pointer w-auto px-6" %>
+      </div>
     <% end %>
   </div>
 
-  <div class="field">
-    <p><%= f.label :password_confirmation %></p>
-    <p><%= f.password_field :password_confirmation, autocomplete: "new-password" %></p>
+  <div class="w-full mt-8 bg-surface border border-red-200 dark:border-red-950/80 rounded-2xl p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div>
+      <h4 class="text-sm font-bold text-red-600 dark:text-red-400">Zona de Perigo</h4>
+      <p class="text-xs text-muted mt-0.5">Deseja cancelar sua conta? Esta ação é irreversível.</p>
+    </div>
+
+    <%= button_to "Cancelar Minha Conta", registration_path(resource_name), method: :delete, data: { turbo_confirm: "Tem certeza que deseja cancelar sua conta? Todos os seus dados serão apagados permanentemente." }, class: "btn-action-danger cursor-pointer shrink-0" %>
   </div>
-
-  <div class="field">
-    <p><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i></p>
-    <p><%= f.password_field :current_password, autocomplete: "current-password" %></p>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+</div>

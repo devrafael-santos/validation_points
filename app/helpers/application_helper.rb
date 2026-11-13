@@ -1,6 +1,6 @@
 module ApplicationHelper
   def user_avatar(user, size_class: "w-8 h-8 text-xs")
-    if user.avatar.attached?
+    if user&.avatar&.attached? && user.avatar.blob&.persisted?
       image_tag user.avatar, class: "#{size_class} rounded-full object-cover ring-1 ring-color shrink-0"
     else
       content_tag :div, user.name.first.upcase,
