@@ -47,9 +47,9 @@ RSpec.describe "Tasks", type: :request do
       sign_in users(:one)
       task = tasks(:one)
 
-      patch task_path(task), params: { task: { title: "Novo Título" } }
+      patch task_path(task), params: { task: { title: "New Title" } }
       expect(response).to redirect_to(root_path)
-      expect(task.reload.title).to eq("Novo Título")
+      expect(task.reload.title).to eq("New Title")
     end
   end
 
