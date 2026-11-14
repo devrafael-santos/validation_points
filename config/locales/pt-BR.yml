@@ -32,6 +32,8 @@ pt-BR:
       model_invalid: "A validação falhou: %{errors}"
       not_a_number: "não é um número"
       not_an_integer: "não é um número inteiro"
+      not_found: "não foi encontrado"
+      already_confirmed: "já foi confirmado"
       odd: "deve ser ímpar"
       other_than: "deve ser diferente de %{count}"
       present: "deve ficar em branco"
