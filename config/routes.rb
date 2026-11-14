@@ -16,4 +16,8 @@ Rails.application.routes.draw do
     root to: "dashboard#index"
     resources :users, only: %i[ index update destroy ]
   end
+
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
 end
