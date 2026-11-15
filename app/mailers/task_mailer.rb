@@ -1,5 +1,4 @@
 class TaskMailer < ApplicationMailer
-
   def reviewer_assigned(task)
     @task = task
     @reviewer = task.reviewer
@@ -9,7 +8,7 @@ class TaskMailer < ApplicationMailer
 
   def task_completed(task)
     @task = task
-    
+
     mail(to: User.pluck(:email), subject: "[#{@task.jira_key}] Tarefa '#{@task.title}' entregue em Produção! 🎉")
   end
 end
