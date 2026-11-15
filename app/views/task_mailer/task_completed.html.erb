@@ -1,0 +1,56 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f3f4f6; width: 100%; min-height: 100%; margin: 0; padding: 40px 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <tr>
+    <td align="center" valign="top">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 580px; background-color: #ffffff; border-radius: 16px; border: 1px solid #e5e7eb; padding: 32px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: left;">
+        <tr>
+          <td align="center" style="padding-bottom: 24px;">
+            <h1 style="color: #111827; font-size: 22px; font-weight: 700; margin: 0; letter-spacing: -0.025em;">Validation Points</h1>
+            <p style="color: #16a34a; font-size: 13px; font-weight: 600; margin: 4px 0 0 0; text-transform: uppercase; letter-spacing: 0.05em;">Entrega em Produção 🎉</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="color: #374151; font-size: 15px; line-height: 24px; padding-bottom: 20px;">
+            Boas notícias! A seguinte tarefa foi concluída com sucesso e promovida para a etapa de <strong>Produção</strong>:
+          </td>
+        </tr>
+
+        <tr>
+          <td style="padding-bottom: 28px;">
+            <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px;">
+              <div style="margin-bottom: 8px;">
+                <span style="font-family: monospace; font-size: 12px; color: #15803d; font-weight: 600;">[<%= @task.jira_key %>]</span>
+                <strong style="font-size: 15px; color: #14532d; margin-left: 6px;"><%= @task.title %></strong>
+              </div>
+
+              <div style="color: #166534; font-size: 13px; line-height: 20px; margin-top: 10px;">
+                <div><strong>Épico:</strong> <%= @task.epic.name %> (<%= @task.epic.project_type.upcase %>)</div>
+                <div><strong>Prioridade:</strong> <%= @task.priority.capitalize %></div>
+                <% if @task.story_points.present? %>
+                  <div><strong>Pontos:</strong> <%= @task.story_points %> pts</div>
+                <% end %>
+                <div><strong>Concluída em:</strong> <%= @task.updated_at.strftime("%d/%m/%Y às %H:%M") %></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="center" style="padding-bottom: 24px;">
+            <% if @task.jira_url.present? %>
+              <%= link_to 'Abrir no JIRA', @task.jira_url, style: "display: inline-block; background-color: #16a34a; color: #ffffff; font-weight: 600; font-size: 14px; padding: 12px 28px; border-radius: 8px; text-decoration: none; margin-bottom: 8px;" %>
+            <% end %>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="border-top: 1px solid #f3f4f6; padding-top: 20px;" align="center">
+            <p style="color: #9ca3af; font-size: 11px; margin: 0;">
+              Esta é uma notificação automática gerada pelo fluxo de trabalho do Validation Points.
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

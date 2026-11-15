@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   has_many :reviewing_tasks, class_name: "Task", foreign_key: :reviewer_id, dependent: :nullify
   has_one_attached :avatar
+  after_create_commit :send_welcome_email
 
   validates :name, presence: true
   validate :acceptable_avatar
@@ -14,6 +15,10 @@ class User < ApplicationRecord
   }
 
   private
+
+  def send_welcome_email
+    UserMailer.user_created(self).deliver_later
+  end
 
   def acceptable_avatar
     return unless avatar.attached?

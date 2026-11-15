@@ -41,6 +41,7 @@ class TasksController < ApplicationController
         format.html { redirect_to root_path, notice: "Task was successfully updated." }
         format.json { head :ok }
       end
+      TaskMailer.task_completed(@task).deliver_later if @task.stage_production?
     else
       @epics = Epic.all
       render :edit, status: :unprocessable_entity
@@ -69,6 +70,7 @@ class TasksController < ApplicationController
       @task.update(reviewer: nil)
     else
       @task.update(reviewer: current_user)
+      TaskMailer.reviewer_assigned(@task).deliver_later
     end
 
     redirect_to root_path
