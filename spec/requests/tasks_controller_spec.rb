@@ -51,25 +51,49 @@ RSpec.describe "Tasks", type: :request do
       expect(response).to redirect_to(root_path)
       expect(task.reload.title).to eq("New Title")
     end
+
+    it "enqueues task_completed email when stage is updated to production" do
+      sign_in users(:one)
+      task = tasks(:one)
+
+      expect {
+        patch task_path(task), params: { task: { stage: "production" } }
+      }.to have_enqueued_mail(TaskMailer, :task_completed).with(task)
+    end
+
+    it "does not enqueue task_completed email when stage is not production" do
+      sign_in users(:one)
+      task = tasks(:one)
+
+      expect {
+        patch task_path(task), params: { task: { stage: "code_review" } }
+      }.not_to have_enqueued_mail(TaskMailer, :task_completed)
+    end
   end
 
   describe "PATCH /tasks/:id/toggle_reviewer" do
-    it "adds reviewer" do
+    it "adds reviewer and enqueues reviewer_assigned email" do
       user = users(:one)
       sign_in user
       task = tasks(:one)
 
-      patch toggle_reviewer_task_path(task)
+      expect {
+        patch toggle_reviewer_task_path(task)
+      }.to have_enqueued_mail(TaskMailer, :reviewer_assigned).with(task)
+
       expect(task.reload.reviewer).to eq(user)
     end
 
-    it "removes reviewer" do
+    it "removes reviewer and does not enqueue reviewer_assigned email" do
       user = users(:one)
       sign_in user
       task = tasks(:one)
       task.update!(reviewer: user)
 
-      patch toggle_reviewer_task_path(task)
+      expect {
+        patch toggle_reviewer_task_path(task)
+      }.not_to have_enqueued_mail(TaskMailer, :reviewer_assigned)
+
       expect(task.reload.reviewer).to be_nil
     end
   end

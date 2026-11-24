@@ -58,4 +58,17 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
     end
   end
+
+  describe "callbacks" do
+    it "enqueues welcome email after creation" do
+      expect {
+        User.create!(
+          name: "Novo Usuário",
+          email: "novo@example.com",
+          password: "password123",
+          password_confirmation: "password123"
+        )
+      }.to have_enqueued_mail(UserMailer, :user_created)
+    end
+  end
 end
