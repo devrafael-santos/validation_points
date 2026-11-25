@@ -36,12 +36,13 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     authorize @task
 
-    if @task.update(task_params)
+    result = Tasks::UpdateOperation.call(task: @task, params: task_params)
+
+    if result.success?
       respond_to do |format|
         format.html { redirect_to root_path, notice: "Task was successfully updated." }
         format.json { head :ok }
       end
-      TaskMailer.task_completed(@task).deliver_later if @task.stage_production?
     else
       @epics = Epic.all
       render :edit, status: :unprocessable_entity
@@ -66,12 +67,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     authorize @task
 
-    if @task.reviewer == current_user
-      @task.update(reviewer: nil)
-    else
-      @task.update(reviewer: current_user)
-      TaskMailer.reviewer_assigned(@task).deliver_later
-    end
+    Tasks::ToggleReviewerOperation.call(task: @task, user: current_user)
 
     redirect_to root_path
   end
