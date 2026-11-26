@@ -1,8 +1,14 @@
+require "sidekiq/web"
+
 Rails.application.routes.draw do
   devise_for :users
   get "up" => "rails/health#show", as: :rails_health_check
 
   root "tasks#index"
+
+  authenticate :user, ->(user) { user.admin? } do
+    mount Sidekiq::Web => "/sidekiq"
+  end
 
   resources :tasks do
     member do

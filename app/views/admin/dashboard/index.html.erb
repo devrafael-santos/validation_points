@@ -12,6 +12,7 @@
 
     <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
       <%= link_to "← Voltar ao Kanban", root_path, class: "btn-action cursor-pointer text-xs sm:text-sm py-2 px-3 shrink-0" %>
+      <%= link_to "Filas (Sidekiq)", "/sidekiq", target: "_blank", rel: "noopener noreferrer", data: { turbo: false }, class: "btn-action cursor-pointer text-xs sm:text-sm py-2 px-3 shrink-0" %>
       <%= link_to "Gerenciar Usuários", admin_users_path, class: "btn-primary cursor-pointer text-xs sm:text-sm w-auto py-2 px-3.5 shrink-0" %>
     </div>
   </div>

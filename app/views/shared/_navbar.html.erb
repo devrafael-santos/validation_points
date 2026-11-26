@@ -15,6 +15,7 @@
 
         <% if policy(:dashboard).show? %>
           <%= link_to "Painel Admin", admin_root_path, class: "px-3 py-1.5 rounded-lg text-xs font-semibold #{current_page?(admin_root_path) ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors'}" %>
+          <%= link_to "Filas (Sidekiq)", "/sidekiq", target: "_blank", rel: "noopener noreferrer", data: { turbo: false }, class: "px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors" %>
         <% end %>
 
         <% if policy(:user).index? %>
