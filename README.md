@@ -36,27 +36,32 @@ A Kanban-style workflow management platform built with Ruby on Rails 8, focused 
 ## Getting Started
 
 1. **Clone the repository:**
+
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/devrafael-santos/validation_points.git
    cd validation_points
    ```
 
 2. **Set up environment variables:**
+
    ```bash
    cp .env.example .env
    ```
 
 3. **Start PostgreSQL and Redis via Docker:**
+
    ```bash
    docker compose up -d
    ```
 
 4. **Install Ruby dependencies:**
+
    ```bash
    bundle install
    ```
 
 5. **Prepare the database:**
+
    ```bash
    bin/rails db:prepare
    ```
@@ -75,11 +80,13 @@ A Kanban-style workflow management platform built with Ruby on Rails 8, focused 
 ## Testing & Code Quality
 
 - **Run the test suite (RSpec):**
+
   ```bash
   bundle exec rspec
   ```
 
 - **Check code style (RuboCop):**
+
   ```bash
   bin/rubocop
   ```
